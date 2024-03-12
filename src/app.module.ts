@@ -1,14 +1,22 @@
-import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { MysqlModule } from './database/config.module';
+import { Module } from '@nestjs/common';
 import * as dotenv from 'dotenv';
+import { MysqlModule } from './database/config.module';
+import { RoleModule } from './modules/roles/role.module';
+import { CheckAuthenGuard } from './shared/guards/authen.guard';
+import { CheckAuthorGuard } from './shared/guards/author.guard';
+import { SharedDataService } from './shared/middlewares/shareData.service';
+import { GenerateToken } from './shared/middlewares/generateToken';
+import { AuthModule } from './modules/auth/auth.module';
 dotenv.config();
 const PORT = process.env.API_KEY;
 
 @Module({
-  imports: [
-    MysqlModule
-  ],
+  imports: [MysqlModule, RoleModule, AuthModule],
   providers: [
+    CheckAuthenGuard,
+    GenerateToken,
+    CheckAuthorGuard,
+    SharedDataService,
   ],
 })
 export class AppModule {}
