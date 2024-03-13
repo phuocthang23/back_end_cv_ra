@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { RoleRepository } from './role.repository';
 import { RoleDTO } from './dto/role.dto';
-// import { IsRoleInterface } from './interface/role.interface';
-// import { GlobalInterface } from 'src/shared/interface/global.interface';
 @Injectable()
 export class RoleServices {
-  constructor(private roleRepo: RoleRepository) {}
+  constructor(private roleRepo: RoleRepository) { }
   getAllRoles(): Promise<{ data: any }> {
     return this.roleRepo.getAllRoles();
   }

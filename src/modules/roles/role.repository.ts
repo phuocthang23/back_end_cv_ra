@@ -1,15 +1,13 @@
 import { RoleEntity } from './entities/role.entity';
-import { ILike, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoleDTO } from './dto/role.dto';
-// import { IsRoleInterface } from './interface/role.interface';
-// import { GlobalInterface } from 'src/shared/interface/global.interface';
 
 export class RoleRepository {
   constructor(
     @InjectRepository(RoleEntity)
     public roleRepository: Repository<RoleEntity>,
-  ) {}
+  ) { }
 
   async getAllRoles(): Promise<{ data: any }> {
     const data = await this.roleRepository.find();
@@ -51,7 +49,6 @@ export class RoleRepository {
         message: 'Role not found',
       };
     }
-
     this.roleRepository.delete(id);
     return {
       success: true,
