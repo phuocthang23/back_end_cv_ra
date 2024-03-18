@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { JobServices } from './job.service';
 import { JobDTO } from './dto/job.dto';
@@ -9,9 +9,13 @@ export class JobController {
   constructor(private readonly jobService: JobServices) { }
 
   @Post('/')
-  job(@Body() jobController: JobDTO): Promise<any> {
+  createJob(@Body() jobController: JobDTO): Promise<any> {
     return this.jobService.createJob(jobController);
   }
 
+  @Get('/')
+  async getAllRoles(): Promise<{ data: JobDTO }> {
+    return this.jobService.getAllRoles();
+  }
 
 }

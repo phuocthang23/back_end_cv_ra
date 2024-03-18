@@ -13,4 +13,8 @@ export class JobServices {
       throw new HttpException('Failed to create job', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  getAllRoles(): Promise<{ data: any }> {
+    return this.jobService.getAllRoles();
+  }
 }
