@@ -7,11 +7,12 @@ import { CheckAuthorGuard } from './shared/guards/author.guard';
 import { SharedDataService } from './shared/middlewares/shareData.service';
 import { GenerateToken } from './shared/middlewares/generateToken';
 import { AuthModule } from './modules/auth/auth.module';
+import { JobModule } from './modules/job/job.module';
 dotenv.config();
 const PORT = process.env.API_KEY;
 
 @Module({
-  imports: [MysqlModule, RoleModule, AuthModule],
+  imports: [MysqlModule, RoleModule, AuthModule, JobModule],
   providers: [
     CheckAuthenGuard,
     GenerateToken,
@@ -19,4 +20,4 @@ const PORT = process.env.API_KEY;
     SharedDataService,
   ],
 })
-export class AppModule {}
+export class AppModule { }
