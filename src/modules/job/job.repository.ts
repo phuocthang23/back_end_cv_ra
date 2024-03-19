@@ -35,4 +35,9 @@ export class JobRepository {
       message: 'Created job successfully',
     };
   }
+
+  async getAllRoles(): Promise<{ data: any }> {
+    const data = await this.jobRepository.find();
+    return { data };
+  }
 }

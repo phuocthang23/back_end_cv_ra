@@ -10,7 +10,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CompanyModule } from './modules/company/company.module';
 import { JobModule } from './modules/job/job.module';
 dotenv.config();
-const PORT = process.env.API_KEY;
 
 @Module({
   imports: [MysqlModule, RoleModule, AuthModule, JobModule, CompanyModule],
@@ -21,4 +20,4 @@ const PORT = process.env.API_KEY;
     SharedDataService,
   ],
 })
-export class AppModule {}
+export class AppModule { }
