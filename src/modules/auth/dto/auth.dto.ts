@@ -26,3 +26,15 @@ export class RegisterDTO {
   @IsNotEmpty()
   password: string;
 }
+
+export class ChangePasswordDTO {
+  @MaxLength(50, {
+    message: 'User is too long',
+  })
+
+  @IsNotEmpty()
+  oldPassword: string;
+
+  @IsNotEmpty()
+  newPassword: string;
+}
