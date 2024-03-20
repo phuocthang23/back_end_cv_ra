@@ -9,9 +9,18 @@ import { GenerateToken } from '../../shared/middlewares/generateToken';
 import { UserEntity } from './entities/auth.entity';
 import { UserController } from './user/user.controller';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
+import { EmailService } from 'src/shared/utils/mail.service';
 @Module({
   controllers: [AuthController, UserController],
   imports: [TypeOrmModule.forFeature([UserEntity, AuthRepository, UserRepository])],
-  providers: [AuthServices, UserServices, AuthRepository, UserRepository, GenerateToken, SharedDataService],
+  providers: [
+    AuthServices,
+    EmailService,
+    UserServices,
+    AuthRepository,
+    UserRepository,
+    GenerateToken,
+    SharedDataService
+  ],
 })
 export class AuthModule { }
