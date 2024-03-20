@@ -12,9 +12,16 @@ export class UserRepository {
         const updatedUser = await this.userEntity.update({ email: req.email }, { password: req.newPassword });
         return updatedUser
     }
+
     async checkUser(req: any): Promise<any> {
         return this.userEntity.findOne({
             where: { email: req.email }
+        });
+    }
+
+    async checkCardId(req: any): Promise<any> {
+        return this.userEntity.findOne({
+            where: { card_id: req.card_id }
         });
     }
 }
