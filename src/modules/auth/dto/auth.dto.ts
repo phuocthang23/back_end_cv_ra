@@ -38,3 +38,11 @@ export class ChangePasswordDTO {
   @IsNotEmpty()
   newPassword: string;
 }
+
+export class ForgotPasswordDTO {
+  @IsNotEmpty()
+  card_id: string;
+
+  @IsNotEmpty()
+  password: string;
+}
