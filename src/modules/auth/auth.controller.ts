@@ -1,7 +1,7 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Put, Body } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { AuthServices } from './auth.service';
-import { LoginDTO, RegisterDTO } from './dto/auth.dto';
+import { LoginDTO, RegisterDTO, SendMailDTO } from './dto/auth.dto';
 
 dotenv.config();
 @Controller(`${process.env.API_KEY}/auth`)
@@ -18,5 +18,10 @@ export class AuthController {
   register(@Body() registerDTOController: RegisterDTO): Promise<any> {
     const req = { ...registerDTOController };
     return this.authService.register(req);
+  }
+
+  @Put('/send-mail-reset-password')
+  sendMailResetPassword(@Body() sendMailController: SendMailDTO) {
+    return this.authService.sendMailChangePassword(sendMailController);
   }
 }

@@ -38,3 +38,9 @@ export class ChangePasswordDTO {
   @IsNotEmpty()
   newPassword: string;
 }
+
+export class SendMailDTO {
+  @IsEmail({}, { message: 'Invalid email format' })
+  @IsNotEmpty()
+  email: string;
+}
