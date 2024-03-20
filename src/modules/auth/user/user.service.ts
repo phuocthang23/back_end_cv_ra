@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { ChangePasswordDTO } from './dto/auth.dto';
+import { ChangePasswordDTO } from '../dto/auth.dto';
 import { UserRepository } from './user.repository';
 import * as bcrypt from 'bcryptjs';
 @Injectable()

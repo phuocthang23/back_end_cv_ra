@@ -1,7 +1,7 @@
-import { UserEntity } from './entities/auth.entity';
+import { UserEntity } from '../entities/auth.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ChangePasswordDTO } from './dto/auth.dto';
+import { ChangePasswordDTO } from '../dto/auth.dto';
 export class UserRepository {
     constructor(
         @InjectRepository(UserEntity)

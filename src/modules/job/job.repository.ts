@@ -10,25 +10,8 @@ export class JobRepository {
     public jobRepository: Repository<JobEntity>,
   ) { }
 
-  private convertDateFormat(dateString: string): string {
-    const [day, month, year] = dateString.split('/');
-    return `${year}-${month}-${day}`;
-  }
-
   async createJob(data: JobDTO): Promise<any> {
-    const workingTime = this.convertDateFormat(data.working_time);
-    const applicationDeadline = this.convertDateFormat(data.application_deadline);
-    const convertData = {
-      title: data.title,
-      address: data.address,
-      working_time: workingTime,
-      application_deadline: applicationDeadline,
-      wage: data.wage,
-      level: data.level,
-      description: data.description,
-      companyId: data.companyId,
-    };
-    const jobEntity = plainToClass(JobEntity, convertData);
+    const jobEntity = plainToClass(JobEntity, data);
     this.jobRepository.create(jobEntity);
     await this.jobRepository.save(jobEntity);
     return {

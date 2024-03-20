@@ -1,7 +1,7 @@
 import { Controller, Put, Body, UseGuards } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { UserServices } from './user.service';
-import { ChangePasswordDTO } from './dto/auth.dto';
+import { ChangePasswordDTO } from '../dto/auth.dto';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
 import { CheckAuthenGuard } from 'src/shared/guards/authen.guard';
 dotenv.config();
