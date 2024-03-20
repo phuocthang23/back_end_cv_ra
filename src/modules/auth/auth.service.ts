@@ -5,6 +5,7 @@ import { LoginDTO, RegisterDTO, SendMailDTO } from './dto/auth.dto';
 import * as bcrypt from 'bcryptjs';
 import { GenerateToken } from 'src/shared/middlewares/generateToken';
 import { EmailService } from '../../shared/utils/mail.service';
+import * as makeToken from 'uniqid';
 @Injectable()
 export class AuthServices {
   constructor(
@@ -43,9 +44,11 @@ export class AuthServices {
 
 
   async register(req: RegisterDTO): Promise<any> {
+    const cardEncryption = makeToken();
+    const card_id: string = cardEncryption;
     const hashPassword = (password: string) =>
       bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-    const user = { ...req, password: hashPassword(req.password) };
+    const user = { ...req, password: hashPassword(req.password), card_id };
     const response = await this.authService.register(user);
     if (response) {
       return {
@@ -64,7 +67,7 @@ export class AuthServices {
       );
     }
     try {
-      const html = `<a href="http://127.0.0.1:3000/reset-password">Click here to confirm your reset password</a>`;
+      const html = `<a href="http://127.0.0.1:3000/reset-password/${checkUser.card_id}">Click here to confirm your reset password</a>`;
       const data = {
         email: checkUser.email,
         html,
