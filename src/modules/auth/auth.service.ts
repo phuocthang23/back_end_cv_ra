@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthRepository } from './auth.repository';
 import { UserRepository } from './user/user.repository';
-import { LoginDTO, RegisterDTO, SendMailDTO } from './dto/auth.dto';
+import { ForgotPasswordDTO, LoginDTO, RegisterDTO, SendMailDTO } from './dto/auth.dto';
 import * as bcrypt from 'bcryptjs';
 import { GenerateToken } from 'src/shared/middlewares/generateToken';
 import { EmailService } from '../../shared/utils/mail.service';
@@ -42,19 +42,54 @@ export class AuthServices {
     }
   }
 
-
   async register(req: RegisterDTO): Promise<any> {
-    const cardEncryption = makeToken();
-    const card_id: string = cardEncryption;
-    const hashPassword = (password: string) =>
-      bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-    const user = { ...req, password: hashPassword(req.password), card_id };
-    const response = await this.authService.register(user);
-    if (response) {
-      return {
-        success: true,
-        message: 'Register successfully',
-      };
+    const checkUser = await this.userService.checkUser(req);
+    if (checkUser) {
+      throw new HttpException(
+        'Email already exists',
+        HttpStatus.CONFLICT,
+      );
+    }
+    try {
+      const cardEncryption = makeToken();
+      const card_id: string = cardEncryption;
+      const hashPassword = (password: string) =>
+        bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+      const user = { ...req, password: hashPassword(req.password), card_id };
+      const response = await this.authService.register(user);
+      if (response) {
+        return {
+          success: true,
+          message: 'Register successfully',
+        };
+      }
+    } catch (error) {
+      throw new HttpException(
+        'Registration failed',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async forgotPassword(req: ForgotPasswordDTO): Promise<any> {
+    const checkUser = await this.userService.checkCardId(req);
+    if (checkUser === null) {
+      throw new HttpException(
+        'Passwords do not match',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+    try {
+      const hashPassword = (password: string) =>
+        bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+      const data = { email: checkUser.email, password: hashPassword(req.password) }
+      await this.authService.forgotPassword(data);
+      return { message: 'Forgot password successfully' }
+    } catch (error) {
+      throw new HttpException(
+        'User not found',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 

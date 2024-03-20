@@ -44,3 +44,10 @@ export class SendMailDTO {
   @IsNotEmpty()
   email: string;
 }
+export class ForgotPasswordDTO {
+  @IsNotEmpty()
+  card_id: string;
+
+  @IsNotEmpty()
+  password: string;
+}
