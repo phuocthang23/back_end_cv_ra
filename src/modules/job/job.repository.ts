@@ -16,7 +16,7 @@ export class JobRepository {
     return await this.jobRepository.save(jobEntity);
   }
 
-  async getAllJob(): Promise<{ data: any }> {
+  async getAllJob() {
     const data = await this.jobRepository.find();
     return { data };
   }

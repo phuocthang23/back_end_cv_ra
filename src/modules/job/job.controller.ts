@@ -14,7 +14,7 @@ export class JobController {
   }
 
   @Get('/')
-  async getAllRoles(): Promise<{ data: JobDTO }> {
+  async getAllRoles() {
     return this.jobService.getAllJob();
   }
 

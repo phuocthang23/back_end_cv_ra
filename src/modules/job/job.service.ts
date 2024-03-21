@@ -4,7 +4,7 @@ import { JobDTO } from './dto/job.dto';
 
 @Injectable()
 export class JobServices {
-  constructor(private jobService: JobRepository) { }
+  constructor(private jobRepository: JobRepository) { }
   private convertDateFormat(dateString: string): string {
     const [day, month, year] = dateString.split('/');
     return `${year}-${month}-${day}`;
@@ -21,7 +21,7 @@ export class JobServices {
       companyId: req.companyId,
     };
     try {
-      await this.jobService.createJob(convertData);
+      await this.jobRepository.createJob(convertData);
       return {
         message: 'Created job successfully',
       };
@@ -30,16 +30,16 @@ export class JobServices {
     }
   }
 
-  async getAllJob(): Promise<{ data: any }> {
-    return await this.jobService.getAllJob();
+  async getAllJob() {
+    return await this.jobRepository.getAllJob();
   }
 
   async getOneJob(id: number): Promise<any> {
-    return await this.jobService.getOneJob(id);
+    return await this.jobRepository.getOneJob(id);
   }
 
   async updateJob(data: any, id: number): Promise<any> {
-    const response = await this.jobService.getOneJob(id)
+    const response = await this.jobRepository.getOneJob(id)
     if (response === null) {
       throw new HttpException(
         'Job not found',
@@ -47,7 +47,7 @@ export class JobServices {
       );
     }
     try {
-      const result = await this.jobService.updateJob(data, id)
+      const result = await this.jobRepository.updateJob(data, id)
       if (result) {
         return {
           message: 'Updated job successfully',
