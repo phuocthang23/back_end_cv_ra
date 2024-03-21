@@ -8,18 +8,11 @@ export class JobEntity {
   @Column()
   title: string;
 
-  @Column()
-  address: string;
-
-
-  @Column({ type: 'date', nullable: false, name: 'working_time' })
-  working_time: Date;
-
-  @Column({ type: 'date', nullable: false, name: 'application_deadline' })
-  application_deadline: Date;
+  @Column({ type: 'date', nullable: false, name: 'expire_at' })
+  expire_at: Date;
 
   @Column()
-  wage: number;
+  salary: number;
 
   @Column()
   level: string;

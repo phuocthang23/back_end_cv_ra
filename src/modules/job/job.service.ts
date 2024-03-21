@@ -11,14 +11,11 @@ export class JobServices {
   }
 
   async createJob(req: JobDTO): Promise<any> {
-    const workingTime = this.convertDateFormat(req.working_time);
-    const applicationDeadline = this.convertDateFormat(req.application_deadline);
+    const workingTime = this.convertDateFormat(req.expire_at);
     const convertData = {
       title: req.title,
-      address: req.address,
-      working_time: workingTime,
-      application_deadline: applicationDeadline,
-      wage: req.wage,
+      expire_at: workingTime,
+      salary: req.salary,
       level: req.level,
       description: req.description,
       companyId: req.companyId,

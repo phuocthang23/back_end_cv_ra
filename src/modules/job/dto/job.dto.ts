@@ -5,16 +5,10 @@ export class JobDTO {
   title: string;
 
   @IsNotEmpty()
-  address: string;
+  expire_at: string;
 
   @IsNotEmpty()
-  working_time: string;
-
-  @IsNotEmpty()
-  wage: number;
-
-  @IsNotEmpty()
-  application_deadline: string;
+  salary: number;
 
   @IsNotEmpty()
   level: string;
