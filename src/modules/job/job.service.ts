@@ -21,13 +21,43 @@ export class JobServices {
       companyId: req.companyId,
     };
     try {
-      return await this.jobService.createJob(convertData);
+      await this.jobService.createJob(convertData);
+      return {
+        message: 'Created job successfully',
+      };
     } catch (error) {
       throw new HttpException('Failed to create job', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  getAllRoles(): Promise<{ data: any }> {
-    return this.jobService.getAllRoles();
+  async getAllJob(): Promise<{ data: any }> {
+    return await this.jobService.getAllJob();
+  }
+
+  async getOneJob(id: number): Promise<any> {
+    return await this.jobService.getOneJob(id);
+  }
+
+  async updateJob(data: any, id: number): Promise<any> {
+    const response = await this.jobService.getOneJob(id)
+    if (response === null) {
+      throw new HttpException(
+        'Job not found',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+    try {
+      const result = await this.jobService.updateJob(data, id)
+      if (result) {
+        return {
+          message: 'Updated job successfully',
+        };
+      }
+    } catch (error) {
+      throw new HttpException(
+        'User not found',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
