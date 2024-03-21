@@ -42,7 +42,7 @@ export class JobController {
   }
 
   @Put('/:id')
-  updateRole(@Body() jobController: any, @Param('id') id: number) {
+  updateJob(@Body() jobController: any, @Param('id') id: number) {
     return this.jobService.updateJob(jobController, id);
   }
 
