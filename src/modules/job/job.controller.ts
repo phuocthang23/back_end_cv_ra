@@ -1,4 +1,14 @@
-import { Controller, Post, Body, Get, Put, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Put,
+  Param,
+  Query,
+  ParseIntPipe,
+  DefaultValuePipe,
+} from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { JobServices } from './job.service';
 import { JobDTO } from './dto/job.dto';
@@ -14,8 +24,16 @@ export class JobController {
   }
 
   @Get('/')
-  async getAllRoles() {
-    return this.jobService.getAllJob();
+  async getAllJob(
+    @Query('title') title: string,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(12), ParseIntPipe) limit: number,
+  ) {
+    if (!page && !limit) {
+      page = 1;
+      limit = 12;
+    }
+    return this.jobService.getAllJob(title, page, limit);
   }
 
   @Get('/:id')

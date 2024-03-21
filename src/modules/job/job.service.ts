@@ -30,8 +30,9 @@ export class JobServices {
     }
   }
 
-  async getAllJob() {
-    return await this.jobRepository.getAllJob();
+  async getAllJob(title: string, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+    return await this.jobRepository.getAllJob(title, limit, skip);
   }
 
   async getOneJob(id: number): Promise<any> {
