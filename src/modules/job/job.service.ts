@@ -61,4 +61,27 @@ export class JobServices {
       );
     }
   }
+
+  async deleteJob(id: number): Promise<any> {
+    const response = await this.jobRepository.getOneJob(id)
+    if (response === null) {
+      throw new HttpException(
+        'Job not found',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+    try {
+      const result = await this.jobRepository.deleteJob(id)
+      if (result) {
+        return {
+          message: 'Delete job successfully',
+        };
+      }
+    } catch (error) {
+      throw new HttpException(
+        'User not found',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }

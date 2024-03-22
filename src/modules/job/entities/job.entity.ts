@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import BitTransformer from '../../../shared/utils/bit.transformer';
 
 @Entity('jobs')
 export class JobEntity {
@@ -22,6 +23,14 @@ export class JobEntity {
 
   @Column({ nullable: true })
   companyId: string;
+
+  @Column({
+    type: 'bit',
+    nullable: false,
+    name: 'isBlock',
+    transformer: new BitTransformer(),
+  })
+  isBlock: boolean;
 
   @Column({
     name: 'createdAt',

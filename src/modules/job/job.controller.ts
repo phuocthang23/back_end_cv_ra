@@ -4,6 +4,7 @@ import {
   Body,
   Get,
   Put,
+  Delete,
   Param,
   Query,
   ParseIntPipe,
@@ -46,4 +47,8 @@ export class JobController {
     return this.jobService.updateJob(jobController, id);
   }
 
+  @Delete('/:id')
+  deleteJob(@Param('id') id: number) {
+    return this.jobService.deleteJob(id);
+  }
 }
