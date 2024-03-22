@@ -30,4 +30,8 @@ export class JobRepository {
   async updateJob(data: any, id: number): Promise<any> {
     return await this.jobRepository.update(id, data);
   }
+
+  async deleteJob(id: number): Promise<any> {
+    return await this.jobRepository.delete(id);
+  }
 }

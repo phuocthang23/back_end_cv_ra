@@ -29,8 +29,7 @@ export class JobController {
   }
 
   @Delete('/:id')
-  deleteJob(@Body() jobController: any, @Param('id') id: number) {
-    // return this.jobService.updateJob(jobController, id);
+  deleteJob(@Param('id') id: number) {
+    return this.jobService.deleteJob(id);
   }
-
 }
