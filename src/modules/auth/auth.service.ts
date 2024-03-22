@@ -102,7 +102,7 @@ export class AuthServices {
       );
     }
     try {
-      const html = `<a href="http://127.0.0.1:3000/reset-password/${checkUser.card_id}">Click here to confirm your reset password</a>`;
+      const html = `<a href="http://localhost:5173/auth/reset-password/${checkUser.card_id}">Click here to confirm your reset password</a>`;
       const data = {
         email: checkUser.email,
         html,
