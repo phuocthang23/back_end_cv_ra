@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Put, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Param, Delete } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { JobServices } from './job.service';
 import { JobDTO } from './dto/job.dto';
@@ -24,8 +24,13 @@ export class JobController {
   }
 
   @Put('/:id')
-  updateRole(@Body() jobController: any, @Param('id') id: number) {
+  updateJob(@Body() jobController: any, @Param('id') id: number) {
     return this.jobService.updateJob(jobController, id);
+  }
+
+  @Delete('/:id')
+  deleteJob(@Body() jobController: any, @Param('id') id: number) {
+    // return this.jobService.updateJob(jobController, id);
   }
 
 }
