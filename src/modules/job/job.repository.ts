@@ -7,7 +7,7 @@ export class JobRepository {
   constructor(
     @InjectRepository(JobEntity)
     public jobRepository: Repository<JobEntity>,
-  ) { }
+  ) {}
 
   async createJob(data: JobDTO): Promise<any> {
     const jobEntity = plainToClass(JobEntity, data);
@@ -16,18 +16,18 @@ export class JobRepository {
   }
 
   async getAllJob(title: string, limit: number, skip: number) {
-    const data = await this.jobRepository.find({
+    const response = await this.jobRepository.findAndCount({
       where: title ? { title: ILike(`%${title}%`) } : {},
       skip,
       take: limit,
     });
-    return data;
+    const [data, total] = response;
+    return { data, total };
   }
-
 
   async getOneJob(id: number): Promise<any> {
     return await this.jobRepository.findOne({
-      where: { id }
+      where: { id },
     });
   }
 
