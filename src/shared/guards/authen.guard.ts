@@ -12,12 +12,15 @@ export class CheckAuthenGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
 
-    const { headers } = request;
+    try {
+      const { headers } = request;
+      const headerString = headers.authorization.split(' ');
+      const currentToken = await this.loginService.verifyJwt(headerString[1]);
 
-    const headerString = headers.authorization.split(' ');
-
-    const currentToken = await this.loginService.verifyJwt(headerString[1]);
-    this.sharedDataService.setCurrentToken(currentToken);
-    return currentToken ? true : false;
+      this.sharedDataService.setCurrentToken(currentToken);
+      return currentToken ? true : false;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

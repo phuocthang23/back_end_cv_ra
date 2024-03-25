@@ -4,7 +4,7 @@ import { JobDTO } from './dto/job.dto';
 
 @Injectable()
 export class JobServices {
-  constructor(private jobRepository: JobRepository) { }
+  constructor(private jobRepository: JobRepository) {}
   private convertDateFormat(dateString: string): string {
     const [day, month, year] = dateString.split('/');
     return `${year}-${month}-${day}`;
@@ -26,7 +26,10 @@ export class JobServices {
         message: 'Created job successfully',
       };
     } catch (error) {
-      throw new HttpException('Failed to create job', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Failed to create job',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -40,48 +43,36 @@ export class JobServices {
   }
 
   async updateJob(data: any, id: number): Promise<any> {
-    const response = await this.jobRepository.getOneJob(id)
+    const response = await this.jobRepository.getOneJob(id);
     if (response === null) {
-      throw new HttpException(
-        'Job not found',
-        HttpStatus.UNAUTHORIZED,
-      );
+      throw new HttpException('Job not found', HttpStatus.UNAUTHORIZED);
     }
     try {
-      const result = await this.jobRepository.updateJob(data, id)
+      const result = await this.jobRepository.updateJob(data, id);
       if (result) {
         return {
           message: 'Updated job successfully',
         };
       }
     } catch (error) {
-      throw new HttpException(
-        'User not found',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Job not found', HttpStatus.BAD_REQUEST);
     }
   }
 
   async deleteJob(id: number): Promise<any> {
-    const response = await this.jobRepository.getOneJob(id)
+    const response = await this.jobRepository.getOneJob(id);
     if (response === null) {
-      throw new HttpException(
-        'Job not found',
-        HttpStatus.UNAUTHORIZED,
-      );
+      throw new HttpException('Job not found', HttpStatus.UNAUTHORIZED);
     }
     try {
-      const result = await this.jobRepository.deleteJob(id)
+      const result = await this.jobRepository.deleteJob(id);
       if (result) {
         return {
           message: 'Delete job successfully',
         };
       }
     } catch (error) {
-      throw new HttpException(
-        'User not found',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
   }
 }
