@@ -1,5 +1,6 @@
 import { RoleEntity } from 'src/modules/roles/entities/role.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import BitTransformer from '../../../shared/utils/bit.transformer';
 
 @Entity('users')
 export class UserEntity {
@@ -14,6 +15,14 @@ export class UserEntity {
 
   @Column()
   password: string;
+
+  @Column({
+    type: 'bit',
+    nullable: false,
+    name: 'is_block',
+    transformer: new BitTransformer(),
+  })
+  isBlock: boolean;
 
   @Column()
   card_id: string;
