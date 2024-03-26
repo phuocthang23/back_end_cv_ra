@@ -1,12 +1,12 @@
 import { UserEntity } from './entities/auth.entity';
 import { FindOneOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoginDTO, RegisterDTO } from './dto/auth.dto';
+import { LoginDTO } from './dto/auth.dto';
 export class AuthRepository {
   constructor(
     @InjectRepository(UserEntity)
     public userEntity: Repository<UserEntity>,
-  ) { }
+  ) {}
 
   async login(req: LoginDTO) {
     const options: FindOneOptions<UserEntity> = {
@@ -23,6 +23,9 @@ export class AuthRepository {
   }
 
   async forgotPassword(data: any): Promise<any> {
-    return await this.userEntity.update({ email: data.email }, { password: data.password });
+    return await this.userEntity.update(
+      { email: data.email },
+      { password: data.password },
+    );
   }
 }

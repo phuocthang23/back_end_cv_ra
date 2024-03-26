@@ -16,11 +16,10 @@ export class CheckAuthenGuard implements CanActivate {
       const { headers } = request;
       const headerString = headers.authorization.split(' ');
       const currentToken = await this.loginService.verifyJwt(headerString[1]);
-
       this.sharedDataService.setCurrentToken(currentToken);
       return currentToken ? true : false;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 }

@@ -9,10 +9,28 @@ import { GenerateToken } from './shared/middlewares/generateToken';
 import { AuthModule } from './modules/auth/auth.module';
 import { CompanyModule } from './modules/company/company.module';
 import { JobModule } from './modules/job/job.module';
+import { CandidatesModule } from './modules/candidates/candidates.module';
+import { ProjectCandidatesModule } from './modules/project_candidates/projectCandidates.module';
+import { SkillCandidatesModule } from './modules/skill_candidates/skillCandidates.module';
+import { EducationCandidatesModule } from './modules/education_candidates/educationCandidates.module';
+import { ExperienceCandidatesModule } from './modules/experience_candidate/experienceCandidates.module';
+import { CertificateCandidatesModule } from './modules/certificate_candidate/certificateCandidate.module';
 dotenv.config();
 
 @Module({
-  imports: [MysqlModule, RoleModule, AuthModule, JobModule, CompanyModule],
+  imports: [
+    MysqlModule,
+    CandidatesModule,
+    RoleModule,
+    AuthModule,
+    JobModule,
+    CompanyModule,
+    ProjectCandidatesModule,
+    SkillCandidatesModule,
+    EducationCandidatesModule,
+    ExperienceCandidatesModule,
+    CertificateCandidatesModule,
+  ],
   providers: [
     CheckAuthenGuard,
     GenerateToken,
@@ -20,4 +38,4 @@ dotenv.config();
     SharedDataService,
   ],
 })
-export class AppModule { }
+export class AppModule {}
