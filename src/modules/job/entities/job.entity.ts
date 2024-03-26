@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import BitTransformer from '../../../shared/utils/bit.transformer';
+import { CandidateEntity } from 'src/modules/candidates/entities/candidates.entity';
 
 @Entity('jobs')
 export class JobEntity {
@@ -31,6 +38,10 @@ export class JobEntity {
     transformer: new BitTransformer(),
   })
   isBlock: boolean;
+
+  @ManyToMany(() => CandidateEntity, (candidate) => candidate.jobs)
+  @JoinTable()
+  candidates: CandidateEntity[];
 
   @Column({
     name: 'createdAt',
