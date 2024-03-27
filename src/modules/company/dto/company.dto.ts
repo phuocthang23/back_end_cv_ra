@@ -2,26 +2,12 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class CompanyDTO {
   @IsString()
   @IsNotEmpty()
-  companyName: string;
+  name: string;
 
   @IsString()
   @IsNotEmpty()
-  website: string;
+  logo: string;
 
-  @IsString()
-  @IsNotEmpty()
-  facbookLink: string;
-
-  @IsString()
-  @IsNotEmpty()
-  Linkeidn: string;
-
-  @IsString()
-  Github: string;
-
-  @IsString()
-  @IsNotEmpty()
-  address: string;
 
   @IsString()
   @IsNotEmpty()
@@ -30,4 +16,10 @@ export class CompanyDTO {
   @IsString()
   @IsNotEmpty()
   policy: string;
+
+  @IsString()
+  @IsNotEmpty()
+  size: number;
+
+
 }
