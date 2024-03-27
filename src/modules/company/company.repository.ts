@@ -12,9 +12,9 @@ export class CompanyRepository {
     return await this.company.save(data);
   }
 
-  async companyNameExists(companyName: string): Promise<boolean> {
+  async companyNameExists(name: string): Promise<boolean> {
     const existingCompany = await this.company.findOne({
-      where: { companyName },
+      where: { name },
     });
     return !!existingCompany;
   }

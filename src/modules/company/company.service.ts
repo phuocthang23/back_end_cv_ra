@@ -8,7 +8,7 @@ export class CompanyService {
 
   async createCompany(data: CompanyDTO): Promise<any> {
     const companyNameExists = await this.company.companyNameExists(
-      data.companyName,
+      data.name,
     );
 
     if (companyNameExists) {

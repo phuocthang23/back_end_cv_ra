@@ -4,9 +4,11 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import BitTransformer from '../../../shared/utils/bit.transformer';
 import { CandidateEntity } from 'src/modules/candidates/entities/candidates.entity';
+import { CompanyEntity } from 'src/modules/company/entities/company.entity';
 
 @Entity('jobs')
 export class JobEntity {
@@ -42,6 +44,12 @@ export class JobEntity {
   @ManyToMany(() => CandidateEntity, (candidate) => candidate.jobs)
   @JoinTable()
   candidates: CandidateEntity[];
+
+  @ManyToOne(
+    () => CompanyEntity,
+    (company) => company.jobs,
+  )
+  company: CompanyEntity[];
 
   @Column({
     name: 'createdAt',

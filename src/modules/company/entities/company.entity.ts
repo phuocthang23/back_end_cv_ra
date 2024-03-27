@@ -1,9 +1,11 @@
+import { JobEntity } from 'src/modules/job/entities/job.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('companies')
@@ -12,30 +14,30 @@ export class CompanyEntity {
   id: number;
 
   @Column({ nullable: false })
-  companyName: string;
+  name: string;
 
   @Column({ nullable: false })
-  website: string;
-
-  @Column({ nullable: false })
-  facbookLink: string;
-
-  @Column({ nullable: false })
-  Linkeidn: string;
-
-  @Column({ nullable: false })
-  Github: string;
-
-  @Column({ nullable: false })
-  address: string;
-
-  @Column({
-    nullable: false,
-  })
-  description: string;
+  logo: string;
 
   @Column({ nullable: true })
-  policy: string;
+  website: string;
+
+  @Column({ nullable: true })
+  link_fb: string;
+
+  @Column({ nullable: true })
+  link_linkedin: string;
+
+  @Column({ nullable: true })
+  follower: number;
+
+  @Column({ nullable: false })
+  size: number;
+
+  @Column({ nullable: false })
+  description: string;
+
+
 
   @Column({
     select: false,
@@ -44,6 +46,9 @@ export class CompanyEntity {
     default: () => 'CURRENT_TIMESTAMP',
   })
   public createdAt: string;
+
+  @OneToMany(() => CompanyEntity, (company) => company.jobs)
+    jobs: JobEntity[]
 
   @Column({
     select: false,
