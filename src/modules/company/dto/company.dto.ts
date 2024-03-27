@@ -8,18 +8,11 @@ export class CompanyDTO {
   @IsNotEmpty()
   logo: string;
 
-
   @IsString()
   @IsNotEmpty()
   description: string;
 
   @IsString()
   @IsNotEmpty()
-  policy: string;
-
-  @IsString()
-  @IsNotEmpty()
   size: number;
-
-
 }

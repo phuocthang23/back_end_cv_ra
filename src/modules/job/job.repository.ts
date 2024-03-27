@@ -20,6 +20,7 @@ export class JobRepository {
       where: title ? { title: ILike(`%${title}%`) } : {},
       skip,
       take: limit,
+      relations: ['company'],
     });
     const [data, total] = response;
     return { data, total };
