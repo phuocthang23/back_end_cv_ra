@@ -20,7 +20,7 @@ export class UserController {
     const currentToken = this.sharedDataService.getCurrentToken();
     const data = {
       ...changePasswordController,
-      email: currentToken.dataGenerateToken.email,
+      email: currentToken.data.email,
     };
     const result = this.userService.changePassword(data);
     return result;
@@ -30,9 +30,7 @@ export class UserController {
   @UseGuards(CheckAuthenGuard)
   softErase() {
     const currentToken = this.sharedDataService.getCurrentToken();
-    const result = this.userService.softErase(
-      currentToken.dataGenerateToken.email,
-    );
+    const result = this.userService.softErase(currentToken.data.email);
     return result;
   }
 }

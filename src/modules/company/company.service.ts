@@ -7,20 +7,16 @@ export class CompanyService {
   constructor(private company: CompanyRepository) {}
 
   async createCompany(data: CompanyDTO): Promise<any> {
-    const companyNameExists = await this.company.companyNameExists(
-      data.name,
-    );
-
+    const companyNameExists = await this.company.companyNameExists(data.name);
     if (companyNameExists) {
       throw new HttpException(
         'Company name already exists',
         HttpStatus.CONFLICT,
       );
     }
-
     try {
-      const result = await this.company.createCompany(data);
-      return { message: 'Company created successfully', data: result };
+      await this.company.createCompany(data);
+      return { message: 'Company created successfully' };
     } catch (error) {
       throw new HttpException(
         'Failed to create company',
@@ -29,8 +25,9 @@ export class CompanyService {
     }
   }
 
-  async getAllCompany(): Promise<any> {
-    return await this.company.getAllCompany();
+  async getAllCompany(name: string, limit: number, page: number): Promise<any> {
+    const skip = (page - 1) * limit;
+    return await this.company.getAllCompany(name, limit, skip);
   }
 
   async getOneCompany(id: number): Promise<any> {

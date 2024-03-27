@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyEntity } from './entities/company.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CompanyDTO } from './dto/company.dto';
 
 export class CompanyRepository {
@@ -19,8 +19,15 @@ export class CompanyRepository {
     return !!existingCompany;
   }
 
-  async getAllCompany(): Promise<any> {
-    return await this.company.find();
+  async getAllCompany(name: string, limit: number, skip: number): Promise<any> {
+    const response = await this.company.findAndCount({
+      where: name ? { name: ILike(`%${name}%`) } : {},
+      skip,
+      take: limit,
+      relations: ['jobs'],
+    });
+    const [data, total] = response;
+    return { data, total };
   }
 
   async getOneCompany(id: number): Promise<any> {
