@@ -17,7 +17,7 @@ import { JobDTO } from './dto/job.dto';
 dotenv.config();
 @Controller(`${process.env.API_KEY}/job`)
 export class JobController {
-  constructor(private readonly jobService: JobServices) { }
+  constructor(private readonly jobService: JobServices) {}
 
   @Post('/')
   createJob(@Body() jobController: JobDTO): Promise<any> {

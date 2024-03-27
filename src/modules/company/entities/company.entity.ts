@@ -1,11 +1,11 @@
+import { UserEntity } from 'src/modules/auth/entities/auth.entity';
 import { JobEntity } from 'src/modules/job/entities/job.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity('companies')
@@ -34,10 +34,17 @@ export class CompanyEntity {
   @Column({ nullable: false })
   size: number;
 
-  @Column({ nullable: false })
+  @Column({ type: 'text', nullable: false })
   description: string;
 
+  @ManyToOne(() => UserEntity, (company) => company.companies)
+  user: UserEntity;
 
+  @OneToMany(() => JobEntity, (company) => company.company)
+  jobs: JobEntity[];
+
+  @Column({ nullable: true })
+  userId: string;
 
   @Column({
     select: false,
@@ -46,9 +53,6 @@ export class CompanyEntity {
     default: () => 'CURRENT_TIMESTAMP',
   })
   public createdAt: string;
-
-  @OneToMany(() => CompanyEntity, (company) => company.jobs)
-    jobs: JobEntity[]
 
   @Column({
     select: false,

@@ -27,7 +27,7 @@ export class JobEntity {
   @Column()
   level: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: false })
   description: string;
 
   @Column({ nullable: true })
@@ -45,10 +45,7 @@ export class JobEntity {
   @JoinTable()
   candidates: CandidateEntity[];
 
-  @ManyToOne(
-    () => CompanyEntity,
-    (company) => company.jobs,
-  )
+  @ManyToOne(() => CompanyEntity, (company) => company.jobs)
   company: CompanyEntity[];
 
   @Column({

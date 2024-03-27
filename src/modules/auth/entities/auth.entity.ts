@@ -1,6 +1,13 @@
 import { RoleEntity } from 'src/modules/roles/entities/role.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import BitTransformer from '../../../shared/utils/bit.transformer';
+import { CompanyEntity } from 'src/modules/company/entities/company.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -29,6 +36,9 @@ export class UserEntity {
 
   @ManyToOne(() => RoleEntity, (role) => role.user)
   role: RoleEntity;
+
+  @OneToMany(() => CompanyEntity, (company) => company.user)
+  companies: CompanyEntity[];
 
   @Column({ nullable: true })
   roleId: string;

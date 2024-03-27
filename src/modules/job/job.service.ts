@@ -26,6 +26,7 @@ export class JobServices {
         message: 'Created job successfully',
       };
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         'Failed to create job',
         HttpStatus.INTERNAL_SERVER_ERROR,
