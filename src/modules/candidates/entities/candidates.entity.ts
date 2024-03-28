@@ -4,6 +4,7 @@ import {
   Column,
   ManyToMany,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import BitTransformer from '../../../shared/utils/bit.transformer';
 import { JobEntity } from 'src/modules/job/entities/job.entity';
@@ -12,6 +13,7 @@ import { SkillCandidatesEntity } from 'src/modules/skill_candidates/entities/ski
 import { EducationCandidatesEntity } from 'src/modules/education_candidates/entities/educationCandidates.entity';
 import { ExperienceCandidatesEntity } from 'src/modules/experience_candidate/entities/experienceCandidates.entity';
 import { CertificateCandidatesEntity } from 'src/modules/certificate_candidate/entities/certificateCandidate.entity';
+import { RoleEntity } from 'src/modules/roles/entities/role.entity';
 
 @Entity('candidates')
 export class CandidateEntity {
@@ -91,6 +93,12 @@ export class CandidateEntity {
     (skillCandidate) => skillCandidate.candidates,
   )
   educationCandidates: EducationCandidatesEntity;
+
+  @ManyToOne(() => RoleEntity, (role) => role.user)
+  role: RoleEntity;
+
+  @Column({ nullable: true, default: 3 })
+  roleId: string;
 
   @OneToMany(
     () => ExperienceCandidatesEntity,
