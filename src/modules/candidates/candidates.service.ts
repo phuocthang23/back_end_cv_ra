@@ -25,7 +25,7 @@ export class CandidatesServices {
         id: checkUser.id,
         email: checkUser.email,
         name: checkUser.name,
-        role: checkUser.role,
+        role: checkUser.role?.role,
         isOpen: checkUser.isOpen,
       };
       const access_token = isChecked

@@ -11,6 +11,7 @@ export class CandidatesRepository {
   async login(req: LoginDTO) {
     const options: FindOneOptions<CandidateEntity> = {
       where: { email: req.email },
+      relations: ['role'],
     };
     return await this.candidateEntity.findOne(options);
   }
