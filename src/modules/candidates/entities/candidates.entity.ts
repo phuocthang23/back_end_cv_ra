@@ -25,7 +25,7 @@ export class CandidateEntity {
 
   @Column({
     type: 'bit',
-    nullable: false,
+    nullable: true,
     name: 'isOpen',
     transformer: new BitTransformer(),
   })
