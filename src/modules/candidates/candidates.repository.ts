@@ -52,6 +52,7 @@ export class CandidatesRepository {
         'educationCandidates',
         'experienceCandidates',
         'certificateCandidates',
+        'role',
       ],
     });
     const [data, total] = response;
