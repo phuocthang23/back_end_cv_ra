@@ -28,7 +28,7 @@ export class CandidatesRepository {
   }
 
   async getAllCandidates(email: string, limit: number, skip: number) {
-    const data = await this.candidateEntity.find({
+    const response = await this.candidateEntity.findAndCount({
       where: email ? { email: ILike(`%${email}%`) } : {},
       skip,
       take: limit,
@@ -54,7 +54,8 @@ export class CandidatesRepository {
         'certificateCandidates',
       ],
     });
-    return data;
+    const [data, total] = response;
+    return { data, total };
   }
 
   async getOneCandidates(id: number): Promise<any> {
