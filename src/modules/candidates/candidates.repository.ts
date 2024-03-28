@@ -84,6 +84,8 @@ export class CandidatesRepository {
         'educationCandidates',
         'experienceCandidates',
         'certificateCandidates',
+        'role',
+        'introduceCandidates',
       ],
     });
   }
