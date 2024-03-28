@@ -5,6 +5,7 @@ import {
   ManyToMany,
   OneToMany,
   ManyToOne,
+  OneToOne,
 } from 'typeorm';
 import BitTransformer from '../../../shared/utils/bit.transformer';
 import { JobEntity } from 'src/modules/job/entities/job.entity';
@@ -14,6 +15,7 @@ import { EducationCandidatesEntity } from 'src/modules/education_candidates/enti
 import { ExperienceCandidatesEntity } from 'src/modules/experience_candidate/entities/experienceCandidates.entity';
 import { CertificateCandidatesEntity } from 'src/modules/certificate_candidate/entities/certificateCandidate.entity';
 import { RoleEntity } from 'src/modules/roles/entities/role.entity';
+import { IntroduceCandidatesEntity } from 'src/modules/introduce_candidates/entities/introduceCandidates.entity';
 
 @Entity('candidates')
 export class CandidateEntity {
@@ -100,6 +102,9 @@ export class CandidateEntity {
   @Column({ nullable: true, default: 3 })
   roleId: string;
 
+  @Column({ nullable: true })
+  introduceCandidatesId: string;
+
   @OneToMany(
     () => ExperienceCandidatesEntity,
     (experienceCandidate) => experienceCandidate.candidates,
@@ -108,9 +113,15 @@ export class CandidateEntity {
 
   @OneToMany(
     () => CertificateCandidatesEntity,
-    (certificateCandidates) => certificateCandidates.candidates,
+    (certificateCandidate) => certificateCandidate.candidates,
   )
   certificateCandidates: CertificateCandidatesEntity;
+
+  @OneToMany(
+    () => IntroduceCandidatesEntity,
+    (introduceCandidates) => introduceCandidates.candidates,
+  )
+  introduceCandidates: IntroduceCandidatesEntity;
 
   @Column({
     name: 'createdAt',
