@@ -29,6 +29,7 @@ export class JobRepository {
   async getOneJob(id: number): Promise<any> {
     return await this.jobRepository.findOne({
       where: { id },
+      relations: ['company'],
     });
   }
 

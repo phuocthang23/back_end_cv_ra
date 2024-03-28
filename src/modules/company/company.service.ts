@@ -18,6 +18,7 @@ export class CompanyService {
       await this.company.createCompany(data);
       return { message: 'Company created successfully' };
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         'Failed to create company',
         HttpStatus.BAD_REQUEST,
