@@ -87,4 +87,8 @@ export class CandidatesRepository {
       ],
     });
   }
+
+  async updateCandidates(data: any, id: number): Promise<any> {
+    return await this.candidateEntity.update(id, data);
+  }
 }

@@ -8,15 +8,22 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { CandidatesServices } from './candidates.service';
 import { LoginDTO, RegisterDTO } from './dto/candidates.dto';
+import { CheckAuthenGuard } from 'src/shared/guards/authen.guard';
+import { SharedDataService } from './../../shared/middlewares/shareData.service';
+import { CheckAuthorGuard } from 'src/shared/guards/author.guard';
 
 dotenv.config();
 @Controller(`${process.env.API_KEY}/candidates`)
 export class CandidateController {
-  constructor(private readonly candidatesService: CandidatesServices) {}
+  constructor(
+    private readonly candidatesService: CandidatesServices,
+    private sharedDataService: SharedDataService,
+  ) {}
 
   @Post('/login')
   login(@Body() loginController: LoginDTO): Promise<any> {
@@ -46,5 +53,15 @@ export class CandidateController {
   @Get('/:id')
   async getOneCandidates(@Param('id') id: number) {
     return this.candidatesService.getOneCandidates(id);
+  }
+
+  @UseGuards(CheckAuthenGuard)
+  @Put('/:id')
+  updateCandidates(@Body() candidatesController: any, @Param('id') id: number) {
+    const result = this.candidatesService.updateCandidates(
+      candidatesController,
+      id,
+    );
+    return result;
   }
 }

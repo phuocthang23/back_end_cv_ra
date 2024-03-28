@@ -19,7 +19,7 @@ export class CheckAuthenGuard implements CanActivate {
       this.sharedDataService.setCurrentToken(currentToken);
       return currentToken ? true : false;
     } catch (error) {
-      return error;
+      return false;
     }
   }
 }

@@ -80,4 +80,21 @@ export class CandidatesServices {
   async getOneCandidates(id: number): Promise<any> {
     return await this.candidatesRepository.getOneCandidates(id);
   }
+
+  async updateCandidates(data: any, id: number): Promise<any> {
+    const response = await this.candidatesRepository.getOneCandidates(id);
+    if (response === null) {
+      throw new HttpException('Project not found', HttpStatus.UNAUTHORIZED);
+    }
+    try {
+      const result = await this.candidatesRepository.updateCandidates(data, id);
+      if (result) {
+        return {
+          message: 'Updated candidates successfully',
+        };
+      }
+    } catch (error) {
+      throw new HttpException('Candidates not found', HttpStatus.BAD_REQUEST);
+    }
+  }
 }
