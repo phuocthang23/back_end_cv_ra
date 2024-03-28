@@ -12,6 +12,9 @@ export class RoleEntity {
   @OneToMany(() => UserEntity, (user) => user.role)
   user: UserEntity[];
 
+  @OneToMany(() => UserEntity, (user) => user.role)
+  candidates: UserEntity[];
+
   @Column({
     select: false,
     name: 'createdAt',
