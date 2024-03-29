@@ -82,8 +82,10 @@ export class CandidatesServices {
     return await this.candidatesRepository.getOneCandidates(id);
   }
 
-  async updateCandidates(data: any, id: number): Promise<any> {
+  async updateCandidates(req: any, id: number): Promise<any> {
     const response = await this.candidatesRepository.getOneCandidates(id);
+    const dob = this.convertDateFormat(req.dob);
+    const data = { ...req, dob };
     if (response === null) {
       throw new HttpException('Project not found', HttpStatus.UNAUTHORIZED);
     }
