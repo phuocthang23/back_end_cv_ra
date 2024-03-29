@@ -46,6 +46,7 @@ export class CandidatesRepository {
         'link_fb',
         'link_linkedin',
         'link_git',
+        'avatar',
       ],
       relations: [
         'projectCandidates',
@@ -77,6 +78,7 @@ export class CandidatesRepository {
         'link_fb',
         'link_linkedin',
         'link_git',
+        'avatar',
       ],
       relations: [
         'projectCandidates',
