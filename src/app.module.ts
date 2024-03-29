@@ -16,6 +16,8 @@ import { EducationCandidatesModule } from './modules/education_candidates/educat
 import { ExperienceCandidatesModule } from './modules/experience_candidate/experienceCandidates.module';
 import { CertificateCandidatesModule } from './modules/certificate_candidate/certificateCandidate.module';
 import { IntroduceCandidatesModule } from './modules/introduce_candidates/introduceCandidates.module';
+import { SkillModule } from './modules/skill/skill.module';
+import { LanguageModule } from './modules/language/language.module';
 dotenv.config();
 
 @Module({
@@ -32,6 +34,8 @@ dotenv.config();
     ExperienceCandidatesModule,
     CertificateCandidatesModule,
     IntroduceCandidatesModule,
+    SkillModule,
+    LanguageModule,
   ],
   providers: [
     CheckAuthenGuard,
