@@ -26,6 +26,13 @@ export class CandidateEntity {
   name: string;
 
   @Column({
+    nullable: true,
+    default:
+      'https://w7.pngwing.com/pngs/722/101/png-transparent-computer-icons-user-profile-circle-abstract-miscellaneous-rim-account.png',
+  })
+  avatar: string;
+
+  @Column({
     type: 'bit',
     nullable: true,
     name: 'isOpen',

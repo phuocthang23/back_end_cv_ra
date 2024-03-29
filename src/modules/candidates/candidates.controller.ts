@@ -6,23 +6,23 @@ import {
   Get,
   Query,
   DefaultValuePipe,
+  UploadedFile,
   ParseIntPipe,
   Param,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { CandidatesServices } from './candidates.service';
 import { LoginDTO, RegisterDTO } from './dto/candidates.dto';
-import { CheckAuthenGuard } from 'src/shared/guards/authen.guard';
-import { SharedDataService } from './../../shared/middlewares/shareData.service';
-import { CheckAuthorGuard } from 'src/shared/guards/author.guard';
-
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from '../../shared/upload-Image/cloudinary.service';
 dotenv.config();
 @Controller(`${process.env.API_KEY}/candidates`)
 export class CandidateController {
   constructor(
     private readonly candidatesService: CandidatesServices,
-    private sharedDataService: SharedDataService,
+    private cloudinaryService: CloudinaryService,
   ) {}
 
   @Post('/login')
@@ -55,13 +55,16 @@ export class CandidateController {
     return this.candidatesService.getOneCandidates(id);
   }
 
-  @UseGuards(CheckAuthenGuard)
+  @UseInterceptors(FileInterceptor('avatar'))
   @Put('/:id')
-  updateCandidates(@Body() candidatesController: any, @Param('id') id: number) {
-    const result = this.candidatesService.updateCandidates(
-      candidatesController,
-      id,
-    );
+  async updateCandidates(
+    @Body() candidatesController: any,
+    @UploadedFile() file: Express.Multer.File,
+    @Param('id') id: number,
+  ) {
+    const avatar: any = await this.cloudinaryService.uploadSingleFile(file);
+    const data = { ...candidatesController, avatar: avatar.url };
+    const result = this.candidatesService.updateCandidates(data, id);
     return result;
   }
 }

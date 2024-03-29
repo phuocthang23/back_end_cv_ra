@@ -6,6 +6,7 @@ import { CandidatesServices } from './candidates.service';
 import { CandidatesRepository } from './candidates.repository';
 import { GenerateToken } from '../../shared/middlewares/generateToken';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
+import { CloudinaryModule } from 'src/shared/upload-Image/cloudinary.module';
 
 @Module({
   controllers: [CandidateController],
@@ -15,6 +16,7 @@ import { SharedDataService } from 'src/shared/middlewares/shareData.service';
       CandidatesServices,
       CandidatesRepository,
     ]),
+    CloudinaryModule,
   ],
   providers: [
     CandidatesServices,

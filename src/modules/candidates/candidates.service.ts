@@ -27,6 +27,7 @@ export class CandidatesServices {
         name: checkUser.name,
         role: checkUser.role?.role,
         isOpen: checkUser.isOpen,
+        avatar: checkUser.avatar,
       };
       const access_token = isChecked
         ? this.generateToken.signJwt({ data })
