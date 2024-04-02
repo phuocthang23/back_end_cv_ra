@@ -103,7 +103,7 @@ export class CandidateEntity {
   )
   educationCandidates: EducationCandidatesEntity;
 
-  @ManyToOne(() => RoleEntity, (role) => role.user)
+  @ManyToOne(() => RoleEntity, (role) => role.candidates)
   role: RoleEntity;
 
   @Column({ nullable: true, default: 3 })

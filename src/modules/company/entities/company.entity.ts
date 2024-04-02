@@ -1,5 +1,6 @@
-import { UserEntity } from 'src/modules/auth/entities/auth.entity';
 import { JobEntity } from 'src/modules/job/entities/job.entity';
+import { RoleEntity } from 'src/modules/roles/entities/role.entity';
+import BitTransformer from 'src/shared/utils/bit.transformer';
 import {
   Entity,
   Column,
@@ -16,7 +17,11 @@ export class CompanyEntity {
   @Column({ nullable: false })
   name: string;
 
-  @Column({ nullable: false })
+  @Column({
+    nullable: false,
+    default:
+      'https://w7.pngwing.com/pngs/722/101/png-transparent-computer-icons-user-profile-circle-abstract-miscellaneous-rim-account.png',
+  })
   logo: string;
 
   @Column({ nullable: true })
@@ -37,14 +42,31 @@ export class CompanyEntity {
   @Column({ type: 'text', nullable: false })
   description: string;
 
-  @ManyToOne(() => UserEntity, (company) => company.companies)
-  user: UserEntity;
-
   @OneToMany(() => JobEntity, (company) => company.company)
   jobs: JobEntity[];
 
-  @Column({ nullable: true })
-  userId: string;
+  @Column()
+  email: string;
+
+  @Column()
+  password: string;
+
+  @Column({
+    type: 'bit',
+    nullable: false,
+    name: 'is_block',
+    transformer: new BitTransformer(),
+  })
+  isBlock: boolean;
+
+  @Column()
+  card_id: string;
+
+  @ManyToOne(() => RoleEntity, (role) => role.companies)
+  role: RoleEntity;
+
+  @Column({ nullable: true, default: 1 })
+  roleId: string;
 
   @Column({
     select: false,

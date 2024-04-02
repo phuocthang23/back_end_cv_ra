@@ -12,9 +12,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
-import { CompanyDTO } from './dto/company.dto';
 import { CheckAuthenGuard } from 'src/shared/guards/authen.guard';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
+import { ChangePasswordDTO } from './dto/company.dto';
 
 @Controller(`${process.env.API_KEY}/company`)
 export class CompanyController {
@@ -25,7 +25,7 @@ export class CompanyController {
 
   @UseGuards(CheckAuthenGuard)
   @Post('/')
-  createCompany(@Body() body: CompanyDTO) {
+  createCompany(@Body() body: any) {
     const currentToken = this.sharedDataService.getCurrentToken();
     const data = {
       ...body,
@@ -53,14 +53,27 @@ export class CompanyController {
   }
 
   @Delete('/:id')
-  // @UseGuards(AuthGuard)
-  deteleCompany(@Param('id') id: number) {
-    return this.company.deteleCompany(id);
+  deleteCompany(@Param('id') id: number) {
+    return this.company.deleteCompany(id);
   }
 
-  @Put('/update/:id')
-  // @UseGuards(AuthGuard)
-  updateUserById(@Param('id') id: number, @Body() body: CompanyDTO) {
-    return this.company.updateUserById(id, body);
+  @Put('/:id')
+  @UseGuards(CheckAuthenGuard)
+  updateUserById(@Param('id') id: number, @Body() body: any) {
+    return this.company.updateCompanyById(id, body);
+  }
+
+  @Put('/change-password')
+  @UseGuards(CheckAuthenGuard)
+  changePassword(
+    @Body() changePasswordController: ChangePasswordDTO,
+  ): Promise<any> {
+    const currentToken = this.sharedDataService.getCurrentToken();
+    const data = {
+      ...changePasswordController,
+      email: currentToken.data.email,
+    };
+    const result = this.company.changePassword(data);
+    return result;
   }
 }

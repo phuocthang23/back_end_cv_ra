@@ -6,7 +6,7 @@ import { CheckAuthenGuard } from './shared/guards/authen.guard';
 import { CheckAuthorGuard } from './shared/guards/author.guard';
 import { SharedDataService } from './shared/middlewares/shareData.service';
 import { GenerateToken } from './shared/middlewares/generateToken';
-import { AuthModule } from './modules/auth/auth.module';
+// import { AuthModule } from './modules/auth/auth.module';
 import { CompanyModule } from './modules/company/company.module';
 import { JobModule } from './modules/job/job.module';
 import { CandidatesModule } from './modules/candidates/candidates.module';
@@ -25,7 +25,7 @@ dotenv.config();
     MysqlModule,
     CandidatesModule,
     RoleModule,
-    AuthModule,
+    // AuthModule,
     JobModule,
     CompanyModule,
     ProjectCandidatesModule,

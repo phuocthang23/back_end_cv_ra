@@ -1,4 +1,5 @@
-import { UserEntity } from 'src/modules/auth/entities/auth.entity';
+import { CandidateEntity } from 'src/modules/candidates/entities/candidates.entity';
+import { CompanyEntity } from 'src/modules/company/entities/company.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('roles')
@@ -9,11 +10,11 @@ export class RoleEntity {
   @Column({ unique: true, nullable: true })
   role: string;
 
-  @OneToMany(() => UserEntity, (user) => user.role)
-  user: UserEntity[];
+  @OneToMany(() => CompanyEntity, (company) => company.role)
+  companies: CompanyEntity[];
 
-  @OneToMany(() => UserEntity, (user) => user.role)
-  candidates: UserEntity[];
+  @OneToMany(() => CandidateEntity, (user) => user.role)
+  candidates: CandidateEntity[];
 
   @Column({
     select: false,

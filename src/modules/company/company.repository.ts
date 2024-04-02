@@ -1,14 +1,13 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyEntity } from './entities/company.entity';
 import { ILike, Repository } from 'typeorm';
-import { CompanyDTO } from './dto/company.dto';
 
 export class CompanyRepository {
   constructor(
     @InjectRepository(CompanyEntity) private company: Repository<CompanyEntity>,
   ) {}
 
-  async createCompany(data: CompanyDTO): Promise<any> {
+  async createCompany(data: any): Promise<any> {
     return await this.company.save(data);
   }
 
@@ -34,11 +33,19 @@ export class CompanyRepository {
     return await this.company.findOneBy({ id });
   }
 
-  async deteleCompany(id: number): Promise<any> {
+  async deleteCompany(id: number): Promise<any> {
     return await this.company.delete(id);
   }
 
-  async updateUserById(id: number, data: CompanyEntity): Promise<any> {
+  async updateCompanyById(id: number, data: CompanyEntity): Promise<any> {
     return await this.company.update(id, data);
+  }
+
+  async changPassword(req: any): Promise<any> {
+    const updatedUser = await this.company.update(
+      { email: req.email },
+      { password: req.newPassword },
+    );
+    return updatedUser;
   }
 }
