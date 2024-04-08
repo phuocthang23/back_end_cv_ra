@@ -39,8 +39,14 @@ export class CompanyEntity {
   @Column({ nullable: false })
   size: number;
 
+  @Column({ nullable: false })
+  phone: number;
+
   @Column({ type: 'text', nullable: false })
   description: string;
+
+  @Column({ type: 'text', nullable: true })
+  policy: string;
 
   @OneToMany(() => JobEntity, (company) => company.company)
   jobs: JobEntity[];
