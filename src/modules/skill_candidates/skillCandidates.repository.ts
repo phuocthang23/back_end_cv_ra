@@ -1,5 +1,5 @@
 import { SkillCandidatesEntity } from './entities/skillCandidates.entity';
-import { Repository, ILike } from 'typeorm';
+import { Repository, ILike, QueryRunner } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SkillCandidatesDTO } from './dto/skillCandidates.dto';
 import { plainToClass } from 'class-transformer';
@@ -9,10 +9,13 @@ export class SkillCandidatesRepository {
     public skillRepository: Repository<SkillCandidatesEntity>,
   ) {}
 
-  async createSkillCandidates(data: SkillCandidatesDTO): Promise<any> {
-    const projectCandidatesEntity = plainToClass(SkillCandidatesEntity, data);
-    this.skillRepository.create(projectCandidatesEntity);
-    return await this.skillRepository.save(projectCandidatesEntity);
+  async createSkillCandidates(
+    data: SkillCandidatesDTO,
+    queryRunner: QueryRunner,
+  ): Promise<any> {
+    return await queryRunner.manager.save(
+      plainToClass(SkillCandidatesEntity, data),
+    );
   }
 
   async getAllSkillCandidates(name: string, limit: number, skip: number) {

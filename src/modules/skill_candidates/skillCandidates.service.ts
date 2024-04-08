@@ -1,22 +1,50 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { SkillCandidatesRepository } from './skillCandidates.repository';
 import { SkillCandidatesDTO } from './dto/skillCandidates.dto';
-
+import { Connection } from 'typeorm';
 @Injectable()
 export class SkillCandidatesServices {
-  constructor(private skillCandidatesRepository: SkillCandidatesRepository) {}
+  constructor(
+    private skillCandidatesRepository: SkillCandidatesRepository,
+    private readonly connection: Connection,
+  ) {}
 
-  async createSkillCandidatesServices(req: SkillCandidatesDTO): Promise<any> {
+  async createSkillCandidatesServices(
+    req: any,
+    candidatesId: number,
+  ): Promise<any> {
+    const queryRunner = this.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     try {
-      await this.skillCandidatesRepository.createSkillCandidates(req);
-      return {
-        message: 'Created Skill Candidates successfully',
-      };
+      if (
+        req.every((data: any) => data.level_job_id) &&
+        req.every((data: any) => data.name)
+      ) {
+        for (const data of req) {
+          await this.skillCandidatesRepository.createSkillCandidates(
+            { ...data, candidatesId },
+            queryRunner,
+          );
+        }
+        await queryRunner.commitTransaction();
+        return {
+          message: 'Created Skill Candidates successfully',
+        };
+      } else {
+        throw new HttpException(
+          'Failed to create Skill Candidates - Missing fields in one or more elements',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
     } catch (error) {
+      await queryRunner.rollbackTransaction();
       throw new HttpException(
         'Failed to create Skill Candidates',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
+    } finally {
+      await queryRunner.release();
     }
   }
 

@@ -63,7 +63,7 @@ export class CandidateController {
     @Param('id') id: number,
   ) {
     const avatar: any = await this.cloudinaryService.uploadSingleFile(file);
-    const data = { ...candidatesController, avatar: avatar.url };
+    const data = { ...candidatesController, avatar: avatar?.url };
     const result = this.candidatesService.updateCandidates(data, id);
     return result;
   }

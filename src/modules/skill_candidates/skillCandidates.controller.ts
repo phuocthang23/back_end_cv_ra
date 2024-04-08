@@ -26,14 +26,13 @@ export class SkillCandidatesController {
   @UseGuards(CheckAuthenGuard)
   @Post('/')
   async createProjectCandidates(
-    @Body() skillCandidatesController: SkillCandidatesDTO,
+    @Body() skillCandidatesController: any,
   ): Promise<any> {
     const currentToken = this.sharedDataService.getCurrentToken();
-    const data = {
-      ...skillCandidatesController,
-      candidatesId: currentToken.data.id,
-    };
-    return this.skillCandidatesServices.createSkillCandidatesServices(data);
+    return this.skillCandidatesServices.createSkillCandidatesServices(
+      skillCandidatesController,
+      currentToken.data.id,
+    );
   }
 
   @Get('/')

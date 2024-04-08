@@ -49,6 +49,7 @@
     "rxjs": "^7.8.1",
     "streamifier": "^0.1.1",
     "typeorm": "^0.3.17",
+    "typeorm-transactional-cls-hooked": "^0.1.21",
     "uniqid": "^5.4.0"
   },
   "devDependencies": {
